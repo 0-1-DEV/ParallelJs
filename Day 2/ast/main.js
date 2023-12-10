@@ -1,4 +1,4 @@
-import { parseVariableDeclaration } from "./handlers.js";
+import { parseVariableDeclaration, parsePrintStatement } from "./handlers.js";
 
 function createAst(tokens) {
   //Step 1: init AST
@@ -24,14 +24,28 @@ function createAst(tokens) {
 
         console.log("Variable found", token);
 
-        let result = parseVariableDeclaration(tokens, i, token);
-        console.log("result:", result);
+        let { declarationNode, assignementNode, newindex } =
+          parseVariableDeclaration(tokens, i, token);
 
+        ast.push(assignementNode);
+        ast.unshift(declarationNode);
+
+        //store this variables in memory
+        //1st phase: Memory will have only declarations
+        //2nd phase: Memory will have assignments
+
+        //we need to implement memory
+
+        //stack memory and heap memory
+
+        i = newindex;
         break;
 
       case "print":
-        //handle print statements here
-        console.log("Print Statement found", token);
+        const { node: nodePrint, newIndex: newIndexPrint } =
+          parsePrintStatement(i, tokens);
+        ast.push(nodePrint);
+        i = newIndexPrint - 1;
 
         break;
 
@@ -41,6 +55,8 @@ function createAst(tokens) {
         break;
     }
   }
+
+  console.log(ast);
 }
 
 export { createAst };
