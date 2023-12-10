@@ -22,6 +22,8 @@ function createAst(tokens) {
 
         console.log("Variable found", token);
 
+        let result = parseVariableDeclaration(tokens, i, token);
+
         break;
 
       case "print":
