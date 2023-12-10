@@ -1,3 +1,5 @@
+import { parseVariableDeclaration } from "./handlers.js";
+
 function createAst(tokens) {
   //Step 1: init AST
   let ast = []; //array of nodes
@@ -23,6 +25,7 @@ function createAst(tokens) {
         console.log("Variable found", token);
 
         let result = parseVariableDeclaration(tokens, i, token);
+        console.log("result:", result);
 
         break;
 

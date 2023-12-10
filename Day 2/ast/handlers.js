@@ -1,4 +1,6 @@
-function parseVariableDeclaration(tokens, i, kind) {
+import { findTokenDataType, findTokenValue } from "./tokens-find.js";
+
+function parseVariableDeclaration(tokens, index, kind) {
   //[let,x,=,10]
   //we are at 0th index
   //let + 1 = variable name
@@ -22,7 +24,7 @@ function parseVariableDeclaration(tokens, i, kind) {
   const declarationNode = {
     nodeType: "VariableDeclaration",
     metaData: {
-      name: tokens[i + 1],
+      name: tokens[index + 1],
       value: undefined,
       kind: kind,
       dataType: findTokenDataType(tokens, index),
@@ -32,14 +34,14 @@ function parseVariableDeclaration(tokens, i, kind) {
   const assignementNode = {
     nodeType: "VariableAssignment",
     metaData: {
-      name: tokens[i + 1],
+      name: tokens[index + 1],
       dataType: findTokenDataType(tokens, index),
 
       value: findTokenValue(tokens, index),
     },
   };
 
-  return { declarationNode, assignementNode };
+  return { declarationNode, assignementNode, newindex: index + 4 };
 }
 
 export { parseVariableDeclaration };
