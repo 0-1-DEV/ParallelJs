@@ -45,6 +45,7 @@ function createAst(tokens) {
         const { node: nodePrint, newIndex: newIndexPrint } =
           parsePrintStatement(i, tokens);
         ast.push(nodePrint);
+        console.log("nodePrint:", nodePrint);
         i = newIndexPrint - 1;
 
         break;

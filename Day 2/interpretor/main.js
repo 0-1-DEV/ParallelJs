@@ -14,7 +14,7 @@ function InterpretJs(sourcecode) {
 
   //ideal tokens array = [let, x, =,10, const, y , = ,20]
   let tokens = tokenize(sourcecode);
-  console.log("tokens:", tokens);
+  console.log(tokens);
 
   //Step 4: Parser(tokens) -> AST
 
