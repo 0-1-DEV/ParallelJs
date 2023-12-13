@@ -12,13 +12,14 @@ function InterpretJs(sourcecode) {
   console.log("result:", result);
   //Step 3: Tokenise source code
 
-  //ideal tokens array = [let, x, =,10, const, y , = ,20]
+  //ideal tokens array = [let, x, =, 10, const, y , = ,20]
   let tokens = tokenize(sourcecode);
   console.log(tokens);
 
   //Step 4: Parser(tokens) -> AST
 
   let AST = Parse(tokens);
+  console.log("AST:", AST);
 }
 
 function runFile(filePath) {

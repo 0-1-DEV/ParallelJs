@@ -21,18 +21,18 @@ function parseVariableDeclaration(tokens, index, kind) {
 
   //create two nodes: declaration node, assignment node
 
-  const declarationNode = {
-    nodeType: "VariableDeclaration",
-    metaData: {
-      name: tokens[index + 1],
-      value: undefined,
-      kind: kind,
-      dataType: findTokenDataType(tokens, index),
-    },
-  };
+  // const declarationNode = {
+  //   nodeType: "VariableDeclaration",
+  //   metaData: {
+  //     name: tokens[index + 1],
+  //     value: undefined,
+  //     kind: kind,
+  //     dataType: findTokenDataType(tokens, index),
+  //   },
+  // };
 
-  const assignementNode = {
-    nodeType: "VariableAssignment",
+  const variableNode = {
+    nodeType: "VariableDeclaration",
     metaData: {
       name: tokens[index + 1],
       dataType: findTokenDataType(tokens, index),
@@ -41,7 +41,7 @@ function parseVariableDeclaration(tokens, index, kind) {
     },
   };
 
-  return { declarationNode, assignementNode, newindex: index + 4 };
+  return { variableNode, newindex: index + 4 };
 }
 
 //1. print(arr)
@@ -65,7 +65,7 @@ function parsePrintStatement(index, tokens) {
 
   //taking care that print(1234) does not get treated as variable
 
-  node.metaData.to_print =
+  node.metaData.printType =
     node.metaData.toPrint.length === 1 && !isAllDigits(node.metaData.toPrint)
       ? "variable"
       : "literal";

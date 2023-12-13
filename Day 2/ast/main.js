@@ -24,11 +24,14 @@ function createAst(tokens) {
 
         console.log("Variable found", token);
 
-        let { declarationNode, assignementNode, newindex } =
-          parseVariableDeclaration(tokens, i, token);
+        let { variableNode, newindex } = parseVariableDeclaration(
+          tokens,
+          i,
+          token
+        );
 
-        ast.push(assignementNode);
-        ast.unshift(declarationNode);
+        ast.push(variableNode);
+        // ast.unshift(declarationNode);
 
         //store this variables in memory
         //1st phase: Memory will have only declarations
@@ -57,7 +60,7 @@ function createAst(tokens) {
     }
   }
 
-  console.log(ast);
+  return ast;
 }
 
 export { createAst };
