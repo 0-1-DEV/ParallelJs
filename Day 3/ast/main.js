@@ -1,3 +1,4 @@
+import { Memory } from "../core/memory.js";
 import { parseVariableDeclaration, parsePrintStatement } from "./handlers.js";
 
 function createAst(tokens) {
@@ -33,13 +34,12 @@ function createAst(tokens) {
 
         //store this variables in memory
         //1st phase: Memory will have only declarations
+
+        Memory.write(variableNode.metaData);
+
         //2nd phase: Memory will have assignments
 
-        //we need to implement memory
-
-        //stack memory and heap memory
-
-        i = newindex;
+        i = newindex - 1;
         break;
 
       case "print":

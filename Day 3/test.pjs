@@ -2,8 +2,8 @@
 print(arr)
 
 let num = 12
-let name = 'pablo pandey'
 const arr = [1,2,3,4]
+let name = 'pablo pandey'
 
 
 print(666)
