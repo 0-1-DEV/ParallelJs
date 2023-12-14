@@ -5,6 +5,7 @@ import { codeCleaner } from "../lexer/cleaners.js";
 import { Parse } from "../parser/main.js";
 import { logMemory } from "../core/helpers.js";
 
+import { Memory } from "../core/memory.js";
 function InterpretJs(sourcecode) {
   //Step 1: Read Sourcecode using node fs module
 
@@ -19,7 +20,49 @@ function InterpretJs(sourcecode) {
   //Step 4: Parser(tokens) -> AST
 
   let AST = Parse(tokens);
-  console.log("AST:", AST);
+
+  logMemory();
+
+  //loop over each ast node and interpret
+
+  for (let i = 0; i < AST.length; i++) {
+    const currrentNode = AST[i];
+    const currrentNodeType = currrentNode.nodeType;
+    const currrentNodeMetaData = currrentNode.metaData;
+
+    let result;
+    switch (currrentNodeType) {
+      case "VariableDeclaration":
+        //interpret var dec here
+
+        console.log(
+          chalk.red("AST Node: Var Declaration  ", currrentNodeMetaData.name)
+        );
+
+        //let num = 12
+
+        result = currrentNodeMetaData.value;
+
+        Memory.write(currrentNodeMetaData, result);
+
+        break;
+
+      case "PrintStatement":
+        //interpret print statements here
+
+        console.log(
+          chalk.blue(
+            "AST Node: Print Statement  ",
+            currrentNodeMetaData.toPrint
+          )
+        );
+
+        break;
+
+      default:
+        console.log("Unknown NodeType", currrentNode);
+    }
+  }
 
   logMemory();
 }

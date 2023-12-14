@@ -16,8 +16,8 @@ class MemoryImp {
     //3 cases of memorynode
   }
 
-  write(node, newval, scope) {
-    console.log("Incoming var node: Phase 1:", node);
+  write(node, newval) {
+    console.log("Write to Memory:", node);
 
     //node: { name: 'num', dataType: 'number', value: '12' }
     //multiple cases
@@ -28,6 +28,7 @@ class MemoryImp {
     //does this memoryNode already exist?
 
     let memoryNode = this.stack.find((item) => item.name === node.name);
+    console.log("memoryNode from stack:", memoryNode);
 
     if (!memoryNode) {
       //method to create a new entry to memory
@@ -35,6 +36,8 @@ class MemoryImp {
       this._createMemoryNode(node);
     } else {
       //method to updatye the value
+
+      this._updateMemoryNode(memoryNode, node, newval);
     }
   }
 
@@ -48,7 +51,17 @@ class MemoryImp {
     this.stack.push(memoryNode);
   }
 
-  _updateMemoryNode() {}
+  _updateMemoryNode(memoryNode, node, newval) {
+    //you actually need to assign value
+
+    let address = generateMemoryAddress();
+
+    memoryNode.value = address;
+
+    node.value = newval;
+
+    this.heap.set(address, node);
+  }
 }
 
 const Memory = new MemoryImp();
