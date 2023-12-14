@@ -18,7 +18,37 @@ class MemoryImp {
 
   write(node, newval, scope) {
     console.log("Incoming var node: Phase 1:", node);
+
+    //node: { name: 'num', dataType: 'number', value: '12' }
+    //multiple cases
+    //1. this is a new entry
+    //2. this is a update entry
+
+    //stack : [{ name: 'num', dataType:'number', value: '12' }]
+    //does this memoryNode already exist?
+
+    let memoryNode = this.stack.find((item) => item.name === node.name);
+
+    if (!memoryNode) {
+      //method to create a new entry to memory
+
+      this._createMemoryNode(node);
+    } else {
+      //method to updatye the value
+    }
   }
+
+  _createMemoryNode(node) {
+    let memoryNode = { ...node };
+
+    memoryNode.value = undefined;
+
+    // mempryNode: { name: 'num', dataType:'number', value: undefined }
+
+    this.stack.push(memoryNode);
+  }
+
+  _updateMemoryNode() {}
 }
 
 const Memory = new MemoryImp();

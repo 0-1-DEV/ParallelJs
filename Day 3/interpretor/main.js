@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { tokenize } from "../lexer/tokenizer.js";
 import { codeCleaner } from "../lexer/cleaners.js";
 import { Parse } from "../parser/main.js";
+import { logMemory } from "../core/helpers.js";
 
 function InterpretJs(sourcecode) {
   //Step 1: Read Sourcecode using node fs module
@@ -19,6 +20,8 @@ function InterpretJs(sourcecode) {
 
   let AST = Parse(tokens);
   console.log("AST:", AST);
+
+  logMemory();
 }
 
 function runFile(filePath) {
