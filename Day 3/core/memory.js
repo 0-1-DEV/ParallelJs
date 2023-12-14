@@ -14,6 +14,27 @@ class MemoryImp {
   // Step 2: Define the read method to read values from memory
   read(nodeName) {
     //3 cases of memorynode
+
+    let memoryNode = this.stack.find((item) => item.name === nodeName);
+    console.log("reading memoryNode:", memoryNode);
+
+    if (memoryNode.value === undefined) {
+      //1. the value is not presetn
+      //2. the value is hoisted
+
+      let error = {};
+
+      //var,let,const
+
+      error.value =
+        memoryNode.kind === "var"
+          ? "undefined"
+          : `Reference Error: Cannot Access ${memoryNode.kind} before initialization`;
+
+      return error;
+    } else {
+      return getHeapValue(memoryNode, this.heap);
+    }
   }
 
   write(node, newval) {

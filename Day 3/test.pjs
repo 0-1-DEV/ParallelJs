@@ -1,13 +1,14 @@
 
-print(arr)
+print(num)
 
-let num = 12
+var num = 12
 const arr = [1,2,3,4]
 let name = 'pablo pandey'
 
 
 print(666)
 print(arr)
+print(name)
 print('Hello from ParallelJs ')
          
 

@@ -15,6 +15,7 @@ function parseVariableDeclaration(tokens, index, kind) {
       dataType: findTokenDataType(tokens, index),
 
       value: findTokenValue(tokens, index),
+      kind: kind,
     },
   };
 

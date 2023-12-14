@@ -6,6 +6,8 @@ import { Parse } from "../parser/main.js";
 import { logMemory } from "../core/helpers.js";
 
 import { Memory } from "../core/memory.js";
+
+import { stringSanitizeforFinalOutput } from "../interpretor/helpers.js";
 function InterpretJs(sourcecode) {
   //Step 1: Read Sourcecode using node fs module
 
@@ -21,6 +23,7 @@ function InterpretJs(sourcecode) {
 
   let AST = Parse(tokens);
 
+  let output = [];
   logMemory();
 
   //loop over each ast node and interpret
@@ -29,6 +32,7 @@ function InterpretJs(sourcecode) {
     const currrentNode = AST[i];
     const currrentNodeType = currrentNode.nodeType;
     const currrentNodeMetaData = currrentNode.metaData;
+    console.log("currrentNodeMetaData:", currrentNodeMetaData);
 
     let result;
     switch (currrentNodeType) {
@@ -50,12 +54,36 @@ function InterpretJs(sourcecode) {
       case "PrintStatement":
         //interpret print statements here
 
-        console.log(
-          chalk.blue(
-            "AST Node: Print Statement  ",
-            currrentNodeMetaData.toPrint
-          )
-        );
+        switch (currrentNodeMetaData.printType) {
+          case "variable":
+            console.log(
+              chalk.cyan(
+                "AST Node: Print Statement: variable  ",
+                currrentNodeMetaData.toPrint
+              )
+            );
+
+            result = Memory.read(currrentNodeMetaData.toPrint[0]); //arr, name, str
+
+            output.push(result.value);
+
+            break;
+
+          case "literal":
+            console.log(
+              chalk.yellow(
+                "AST Node: Print Statement : literal  ",
+                currrentNodeMetaData.toPrint
+              )
+            );
+
+            let literalstring = currrentNodeMetaData.toPrint.join(" ");
+
+            result = stringSanitizeforFinalOutput(literalstring);
+
+            output.push(result);
+            break;
+        }
 
         break;
 
@@ -65,6 +93,8 @@ function InterpretJs(sourcecode) {
   }
 
   logMemory();
+
+  return output;
 }
 
 function runFile(filePath) {
@@ -76,7 +106,11 @@ function runFile(filePath) {
     }
 
     //passing the sourcecode
-    let result = InterpretJs(sourcecode);
+    let output = InterpretJs(sourcecode);
+
+    output.forEach((singleoutput) => {
+      console.log(singleoutput);
+    });
   });
 }
 

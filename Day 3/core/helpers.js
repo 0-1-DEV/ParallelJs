@@ -4,7 +4,11 @@ import chalk from "chalk";
 import { Memory } from "./memory.js";
 
 //  method to get value from heap
-function getHeapValue(node, heap) {}
+function getHeapValue(memoryNode, heap) {
+  const heapNode = heap.get(memoryNode.value); //this gives address
+
+  return heapNode;
+}
 
 //method to generate address for heap value
 function generateMemoryAddress() {
