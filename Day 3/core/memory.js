@@ -1,10 +1,5 @@
 // Import necessary helper functions from helpers.js file
-import {
-  isUninitialized,
-  getHeapValue,
-  isPrimitive,
-  generateMemoryAddress,
-} from "./helpers.js";
+import { getHeapValue, isPrimitive, generateMemoryAddress } from "./helpers.js";
 
 // Step 1: Define the MemoryImp class
 class MemoryImp {

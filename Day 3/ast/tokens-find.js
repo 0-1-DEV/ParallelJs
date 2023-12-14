@@ -48,7 +48,6 @@ function findTokenValue(tokens, index) {
       break;
     case "method":
       tokenValue = handleMethodTokens(tokens, index + 3);
-      console.log("tokenValue:", tokenValue);
 
       break;
     default:

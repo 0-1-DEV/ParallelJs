@@ -9,7 +9,6 @@ function InterpretJs(sourcecode) {
 
   //Step 2: Cleaning the Sourcecode
   let result = codeCleaner(sourcecode);
-  console.log("result:", result);
   //Step 3: Tokenise source code
 
   //ideal tokens array = [let, x, =, 10, const, y , = ,20]

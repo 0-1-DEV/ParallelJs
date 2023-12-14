@@ -22,8 +22,6 @@ function createAst(tokens) {
       case "var":
         //handle Variables here
 
-        console.log("Variable found", token);
-
         let { variableNode, newindex } = parseVariableDeclaration(
           tokens,
           i,
@@ -48,7 +46,6 @@ function createAst(tokens) {
         const { node: nodePrint, newIndex: newIndexPrint } =
           parsePrintStatement(i, tokens);
         ast.push(nodePrint);
-        console.log("nodePrint:", nodePrint);
         i = newIndexPrint - 1;
 
         break;
