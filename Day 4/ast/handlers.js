@@ -63,23 +63,45 @@ function parseFunctionExpression(tokens, index) {
   //we need to find function body
 
   let bodyStartIndex = index + 5;
-  console.log("bodyStartIndex:", bodyStartIndex);
 
   let bodyLastIndex = bodyStartIndex; //30
 
   //increment bodylastindex till it reaches }
 
   while (tokens[bodyLastIndex] !== "}") {
-    console.log("tokens:", tokens[bodyLastIndex]);
     bodyLastIndex++;
   }
 
   let bodyTokens = tokens.slice(bodyStartIndex, bodyLastIndex);
-  console.log("bodyTokens:", bodyTokens);
+
+  let node = {
+    nodeType: "FunctionExpression",
+    metaData: {
+      functionName,
+      body: bodyTokens,
+    },
+  };
+
+  return { node, newIndex: bodyLastIndex + 1 };
 }
 
+function parseFunctionCall(tokens, index) {
+  let functionName = tokens[index];
+
+  let node = {
+    nodeType: "FunctionCall",
+
+    metaData: {
+      functionName,
+      arguments: [],
+    },
+  };
+
+  return { node, newIndex: index + 3 };
+}
 export {
   parseVariableDeclaration,
   parsePrintStatement,
   parseFunctionExpression,
+  parseFunctionCall,
 };

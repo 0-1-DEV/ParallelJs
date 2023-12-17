@@ -3,6 +3,7 @@ import {
   parseVariableDeclaration,
   parsePrintStatement,
   parseFunctionExpression,
+  parseFunctionCall,
 } from "./handlers.js";
 
 function createAst(tokens) {
@@ -52,10 +53,42 @@ function createAst(tokens) {
         break;
 
       case "function":
-        let temp = parseFunctionExpression(tokens, i);
+        let { node: nodeFunc, newIndex: newIndexFunc } =
+          parseFunctionExpression(tokens, i);
+
+        ast.push(nodeFunc);
+
+        //we need to convert functionbody tokens into functionbody AST
+
+        let functionBodyTokens = nodeFunc.metaData.body;
+
+        //if we feed tokens to it, it will output AST
+        let functionBodyNode = createAst(functionBodyTokens);
+
+        //designed for memory
+        let functionNode = {
+          name: nodeFunc.metaData.functionName,
+          value: functionBodyNode,
+          type: "function",
+        };
+
+        Memory.write(functionNode);
+
+        i = newIndexFunc;
 
       default:
         //handle unknown tokens
+        //check for a function call
+
+        // 'showValues', '(',    ')'
+
+        if (tokens[i + 1] === "(" && tokens[i + 2] === ")") {
+          let { node: nodeFuncCall, newIndex: newIndexFuncCall } =
+            parseFunctionCall(tokens, i);
+
+          ast.push(nodeFuncCall);
+          i = newIndexFuncCall;
+        }
 
         break;
     }

@@ -21,11 +21,14 @@ function InterpretJs(sourcecode) {
   //Step 4: Parser(tokens) -> AST
 
   let AST = Parse(tokens);
+  console.log("AST:", AST);
 
   let output = [];
   logMemory();
 
   //loop over each ast node and interpret
+
+  console.log(chalk.red("Execution phase : Interpretation starts"));
 
   for (let i = 0; i < AST.length; i++) {
     //Read AST Node Data

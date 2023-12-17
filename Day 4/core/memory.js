@@ -61,7 +61,19 @@ class MemoryImp {
   _createMemoryNode(node) {
     let memoryNode = { ...node };
 
-    memoryNode.value = undefined;
+    if (node.type === "function") {
+      memoryNode.value = node.value;
+
+      //stack - addresses
+      //heap - values
+
+      this._updateMemoryNode(memoryNode, node, node.value);
+    }
+
+    //this is for var, let , const
+    else {
+      memoryNode.value = undefined;
+    }
 
     // mempryNode: { name: 'num', dataType:'number', value: undefined }
 
