@@ -9,7 +9,15 @@ let name = 'pablo pandey'
 print(666)
 print(arr)
 print(name)
-print('Hello from ParallelJs ')
+
          
 
-     
+ function showValues()
+ {
+
+print('Hello from function ')
+
+
+ }    
+
+ showValues()
