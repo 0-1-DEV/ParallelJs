@@ -1,5 +1,9 @@
 import { Memory } from "../core/memory.js";
-import { parseVariableDeclaration, parsePrintStatement } from "./handlers.js";
+import {
+  parseVariableDeclaration,
+  parsePrintStatement,
+  parseFunctionExpression,
+} from "./handlers.js";
 
 function createAst(tokens) {
   //Step 1: init AST
@@ -8,7 +12,7 @@ function createAst(tokens) {
   //Step 2:iterate through tokens
 
   for (let i = 0; i < tokens.length; i++) {
-  let token = tokens[i];
+    let token = tokens[i];
 
     //Step 3: Identifying the token
 
@@ -30,7 +34,7 @@ function createAst(tokens) {
         );
 
         ast.push(variableNode);
-    
+
         Memory.write(variableNode.metaData);
 
         //2nd phase: Memory will have assignments
@@ -46,6 +50,9 @@ function createAst(tokens) {
         i = newIndexPrint - 1;
 
         break;
+
+      case "function":
+        let temp = parseFunctionExpression(tokens, i);
 
       default:
         //handle unknown tokens

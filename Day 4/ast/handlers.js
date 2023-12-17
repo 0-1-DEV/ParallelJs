@@ -1,5 +1,7 @@
 import { findTokenDataType, findTokenValue } from "./tokens-find.js";
 import { isAllDigits } from "./utility.js";
+
+import chalk from "chalk";
 function parseVariableDeclaration(tokens, index, kind) {
   /*INPUT EXAMPLE -  ['let', 'num', '=','12',]
   /OUTPUT  - {
@@ -51,4 +53,33 @@ function parsePrintStatement(index, tokens) {
   return { node, newIndex: index + 1 }; // +1 to move past the closing ')'
 }
 
-export { parseVariableDeclaration, parsePrintStatement };
+function parseFunctionExpression(tokens, index) {
+  //functionName, functionBody
+
+  console.log(chalk.blue("Parsing Function here:"));
+
+  let functionName = tokens[index + 1];
+
+  //we need to find function body
+
+  let bodyStartIndex = index + 5;
+  console.log("bodyStartIndex:", bodyStartIndex);
+
+  let bodyLastIndex = bodyStartIndex; //30
+
+  //increment bodylastindex till it reaches }
+
+  while (tokens[bodyLastIndex] !== "}") {
+    console.log("tokens:", tokens[bodyLastIndex]);
+    bodyLastIndex++;
+  }
+
+  let bodyTokens = tokens.slice(bodyStartIndex, bodyLastIndex);
+  console.log("bodyTokens:", bodyTokens);
+}
+
+export {
+  parseVariableDeclaration,
+  parsePrintStatement,
+  parseFunctionExpression,
+};

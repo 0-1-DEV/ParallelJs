@@ -17,8 +17,7 @@ function InterpretJs(sourcecode) {
 
   //ideal tokens array = [let, x, =, 10, const, y , = ,20]
   let tokens = tokenize(sourcecode);
-  console.log(tokens);
-
+  console.log("tokens:", tokens);
   //Step 4: Parser(tokens) -> AST
 
   let AST = Parse(tokens);
@@ -33,16 +32,11 @@ function InterpretJs(sourcecode) {
     const currrentNode = AST[i];
     const currrentNodeType = currrentNode.nodeType;
     const currrentNodeMetaData = currrentNode.metaData;
-    console.log("currrentNodeMetaData:", currrentNodeMetaData);
 
     let result;
     switch (currrentNodeType) {
       case "VariableDeclaration":
         //interpret var dec here
-
-        console.log(
-          chalk.red("AST Node: Var Declaration  ", currrentNodeMetaData.name)
-        );
 
         //currrentNodeMetaData = { name: 'num', dataType: 'number', value: '12', kind: 'var' }
 
@@ -59,13 +53,6 @@ function InterpretJs(sourcecode) {
 
         switch (currrentNodeMetaData.printType) {
           case "variable":
-            console.log(
-              chalk.cyan(
-                "AST Node: Print Statement: variable  ",
-                currrentNodeMetaData.toPrint
-              )
-            );
-
             // Give the variable name, get back the value from Heap
             result = Memory.read(currrentNodeMetaData.toPrint[0]); //arr, name, str
 
@@ -74,13 +61,6 @@ function InterpretJs(sourcecode) {
             break;
 
           case "literal":
-            console.log(
-              chalk.yellow(
-                "AST Node: Print Statement : literal  ",
-                currrentNodeMetaData.toPrint
-              )
-            );
-
             let literalstring = currrentNodeMetaData.toPrint.join(" ");
 
             result = stringSanitizeforFinalOutput(literalstring);

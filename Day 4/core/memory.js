@@ -16,7 +16,6 @@ class MemoryImp {
     //3 cases of memorynode
 
     let memoryNode = this.stack.find((item) => item.name === nodeName);
-    console.log("reading memoryNode:", memoryNode);
 
     if (memoryNode.value === undefined) {
       //1. the value is not presetn
@@ -38,8 +37,6 @@ class MemoryImp {
   }
 
   write(node, newval) {
-    console.log("Write to Memory:", node);
-
     //node: { name: 'num', dataType: 'number', value: '12' }
     //multiple cases
     //1. this is a new entry
@@ -49,7 +46,6 @@ class MemoryImp {
     //does this memoryNode already exist?
 
     let memoryNode = this.stack.find((item) => item.name === node.name);
-    console.log("memoryNode from stack:", memoryNode);
 
     if (!memoryNode) {
       //method to create a new entry to memory

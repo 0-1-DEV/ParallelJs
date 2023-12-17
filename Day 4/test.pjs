@@ -15,9 +15,13 @@ print(name)
  function showValues()
  {
 
-print('Hello from function ')
+ print('Hello from func')
 
+print(arr)
+print(name)
 
  }    
 
  showValues()
+
+
