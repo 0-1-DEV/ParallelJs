@@ -36,6 +36,7 @@ function createAst(tokens) {
 
         ast.push(variableNode);
 
+        //1st phase memory
         Memory.write(variableNode.metaData);
 
         //2nd phase: Memory will have assignments

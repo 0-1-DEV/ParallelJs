@@ -30,54 +30,74 @@ function InterpretJs(sourcecode) {
 
   console.log(chalk.red("Execution phase : Interpretation starts"));
 
-  for (let i = 0; i < AST.length; i++) {
-    //Read AST Node Data
-    const currrentNode = AST[i];
-    const currrentNodeType = currrentNode.nodeType;
-    const currrentNodeMetaData = currrentNode.metaData;
+  function InterpretAST(AST) {
+    for (let i = 0; i < AST.length; i++) {
+      //Read AST Node Data
+      const currrentNode = AST[i];
+      const currrentNodeType = currrentNode.nodeType;
+      const currrentNodeMetaData = currrentNode.metaData;
 
-    let result;
-    switch (currrentNodeType) {
-      case "VariableDeclaration":
-        //interpret var dec here
+      let result;
+      switch (currrentNodeType) {
+        case "VariableDeclaration":
+          //interpret var dec here
 
-        //currrentNodeMetaData = { name: 'num', dataType: 'number', value: '12', kind: 'var' }
+          //currrentNodeMetaData = { name: 'num', dataType: 'number', value: '12', kind: 'var' }
+          //
+          /* Grab the node value found through
+           ParseVariableDeclaration() in our Parser */
+          result = currrentNodeMetaData.value;
 
-        /* Grab the node value found through
-         ParseVariableDeclaration() in our Parser */
-        result = currrentNodeMetaData.value;
+          //2nd phase memory - undefined -> actual value
+          Memory.write(currrentNodeMetaData, result);
 
-        Memory.write(currrentNodeMetaData, result);
+          break;
 
-        break;
+        case "PrintStatement":
+          //interpret print statements here
 
-      case "PrintStatement":
-        //interpret print statements here
+          switch (currrentNodeMetaData.printType) {
+            case "variable":
+              // Give the variable name, get back the value from Heap
+              result = Memory.read(currrentNodeMetaData.toPrint[0]); //arr, name, str
 
-        switch (currrentNodeMetaData.printType) {
-          case "variable":
-            // Give the variable name, get back the value from Heap
-            result = Memory.read(currrentNodeMetaData.toPrint[0]); //arr, name, str
+              //
+              output.push(result.value);
 
-            output.push(result.value);
+              break;
 
-            break;
+            case "literal":
+              let literalstring = currrentNodeMetaData.toPrint.join(" ");
 
-          case "literal":
-            let literalstring = currrentNodeMetaData.toPrint.join(" ");
+              result = stringSanitizeforFinalOutput(literalstring);
 
-            result = stringSanitizeforFinalOutput(literalstring);
+              output.push(result);
+              break;
+          }
 
-            output.push(result);
-            break;
-        }
+          break;
 
-        break;
+        case "FunctionCall":
+          console.log(chalk.cyan("We are execution a function Now"));
 
-      default:
-        console.log("Unknown NodeType", currrentNode);
+          //we need to execute function body
+
+          let functionName = currrentNodeMetaData.functionName;
+          console.log("functionName:", functionName);
+
+          //how do we read value from memory?
+
+          let functionBody = Memory.read(functionName);
+
+          InterpretAST(functionBody.value);
+
+        default:
+          console.log("Unknown NodeType", currrentNode);
+      }
     }
   }
+
+  InterpretAST(AST);
 
   logMemory();
 
@@ -94,6 +114,7 @@ function runFile(filePath) {
 
     //passing the sourcecode
     let output = InterpretJs(sourcecode);
+    console.log("output:", output);
 
     output.forEach((singleoutput) => {
       console.log(singleoutput);

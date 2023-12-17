@@ -1,5 +1,7 @@
 
 
+showValues()
+
 
 
 print(num)
@@ -25,7 +27,7 @@ print(name)
 
  }    
 
- showValues()
+
 
 
 
