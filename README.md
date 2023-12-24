@@ -6,20 +6,20 @@ This project is organized as follows:
 
 - `Day 2`: Contains the abstract syntax tree (AST) module and core functionality.
   - `ast`
-    - `handlers.js`
+    - `extractors.js`
     - `main.js`
-    - `tokens-find.js`
-    - `tokens-is.js`
-    - `utility.js`
+    - `finders.js`
+    - `handlers.js`
+    - `verifiers.js`
   - `core`
     - `helpers.js`
     - `memory.js`
   - `interpretor`
     - `helpers.js`
     - `main.js`
-  - `lexer`
+  - `tokeniser`
     - `cleaners.js`
-    - `tokenizer.js`
+    - `main.js`
 - `node_modules`: Node.js modules (not expanded for brevity).
 - `parser`
   - `main.js`
@@ -32,7 +32,7 @@ Each directory contains modules with distinct responsibilities:
 - `ast`: Manipulation and query of the abstract syntax tree.
 - `core`: Core utilities and helpers for the application logic.
 - `interpretor`: The logic for interpreting the code.
-- `lexer`: Responsible for breaking down the input into tokens.
+- `tokeniser`: Responsible for breaking down the input into tokens.
 - `parser`: Parses the tokens into a syntax tree or other structures.
 
 ## Getting Started
