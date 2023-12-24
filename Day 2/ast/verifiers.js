@@ -13,6 +13,7 @@ function isArrayToken(token) {
   return token === "[";
 }
 
+//arr.push()
 function isMethodToken(token, nextToken) {
   // Additional logic can be implemented here if needed
   return typeof token === "string" && nextToken === ".";

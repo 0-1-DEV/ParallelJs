@@ -3,6 +3,7 @@ import chalk from "chalk";
 
 import { codeCleaner } from "../tokeniser/cleaners.js";
 import { tokeniser } from "../tokeniser/main.js";
+import { Parser } from "../parser/main.js";
 
 function InterpretJs(sourcecode) {
   console.log(chalk.red("sourcecode:"), sourcecode);
@@ -17,6 +18,11 @@ function InterpretJs(sourcecode) {
 
   let tokens = tokeniser(cleanedCode);
   console.log(chalk.cyan("Step 2: tokens:"), tokens);
+
+  //STEP 3 : Parse the code (give meaning to code, create AST out of code)
+
+  let AST = Parser(tokens);
+  console.log(chalk.green("Step 3: AST:"), AST);
 }
 
 function runFile(filePath) {
