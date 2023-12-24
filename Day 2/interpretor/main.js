@@ -2,13 +2,21 @@ import fs from "fs";
 import chalk from "chalk";
 
 import { codeCleaner } from "../tokeniser/cleaners.js";
+import { tokeniser } from "../tokeniser/main.js";
 
 function InterpretJs(sourcecode) {
-  console.log("sourcecode:", sourcecode);
+  console.log(chalk.red("sourcecode:"), sourcecode);
 
   //STEP 1: Clean the code
   let cleanedCode = codeCleaner(sourcecode);
-  console.log("cleanedCode:", cleanedCode);
+  console.log(chalk.blue("Step 1: cleanedCode:"), cleanedCode);
+
+  //STEP 2: Tokenise the code
+  //Input : let num = 12
+  //Output : ["let", "num", "=", "12"]
+
+  let tokens = tokeniser(cleanedCode);
+  console.log(chalk.cyan("Step 2: tokens:"), tokens);
 }
 
 function runFile(filePath) {
