@@ -3,20 +3,21 @@ import { findTokenDataType, findTokenValue } from "./finders.js";
 function parseVariableDeclaration(tokens, index) {
   //
 
-  let { value, endIndex } = findTokenValue(tokens, index);
+  let tokenValue = findTokenValue(tokens, index);
+  console.log("tokenValue:", tokenValue);
 
   const variableNode = {
     nodeType: "VariableDeclaration",
 
     metadata: {
       name: tokens[index + 1],
-      value: value,
+      value: tokenValue,
       dataType: findTokenDataType(tokens, index),
       kind: tokens[index],
     },
   };
 
-  return { variableNode, endIndex };
+  return variableNode;
 }
 
 function parsePrintStatement(tokens, index) {

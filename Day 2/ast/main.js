@@ -25,9 +25,10 @@ function createAST(tokens) {
       case "var":
       case "let":
       case "const":
-        let { variableNode, endIndex } = parseVariableDeclaration(tokens, i);
+        let variableNode = parseVariableDeclaration(tokens, i);
 
         ast.push(variableNode);
+
         // i = endIndex;
         break;
 

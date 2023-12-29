@@ -7,9 +7,14 @@ let num = 12
 
 
 
-  print(666)
+
+print(666)
+
 print(arr)
+
 print('Hello from ParallelJs')
+
+
 
 
 
