@@ -1,5 +1,6 @@
 import { findTokenDataType, findTokenValue } from "./finders.js";
 
+import { isAllDigits } from "./verifiers.js";
 function parseVariableDeclaration(tokens, index) {
   //
 
@@ -35,6 +36,14 @@ function parsePrintStatement(tokens, index) {
 
     index++;
   }
+
+  //figuring out the datatype of the print statement
+
+  printNode.metadata.printType =
+    printNode.metadata.toPrint.length === 1 &&
+    !isAllDigits(printNode.metadata.toPrint)
+      ? "variable"
+      : "literal";
 
   return printNode;
 }

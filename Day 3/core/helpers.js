@@ -3,13 +3,6 @@
 import chalk from "chalk";
 import { Memory } from "./memory.js";
 
-// Helper method to get value from heap
-function getHeapValue(node, heap) {
-  const heapNode = heap.get(node.value);
-
-  return heapNode;
-}
-
 function generateMemoryAddress() {
   // Generate a random number between 0x1000 (4096) and 0xFFFF (65535)
   let address = Math.floor(Math.random() * (0xffff - 0x1000 + 1)) + 0x1000;
@@ -38,4 +31,4 @@ function logMemory() {
   console.table(y);
 }
 
-export { getHeapValue, generateMemoryAddress, logMemory };
+export { generateMemoryAddress, logMemory };

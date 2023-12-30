@@ -5,6 +5,8 @@ import { codeCleaner } from "../tokeniser/cleaners.js";
 import { tokeniser } from "../tokeniser/main.js";
 import { Parser } from "../parser/main.js";
 import { logMemory } from "../core/helpers.js";
+import { Memory } from "../core/memory.js";
+import { stringSanitizeforFinalOutput } from "./helpers.js";
 
 function InterpretJs(sourcecode) {
   console.log(chalk.red("Creation Phase Starts"));
@@ -31,6 +33,78 @@ function InterpretJs(sourcecode) {
   console.log(chalk.green("Creation Phase Complete"));
 
   logMemory();
+
+  console.log(chalk.red("Execution Phase Starts"));
+
+  //STEP 4: Execute the code (interpret the code)
+
+  let result = InterpretAST(AST);
+  console.log(chalk.red("Execution Phase Ends"));
+
+  logMemory();
+
+  return result;
+}
+
+function InterpretAST(AST) {
+  //AST -> [{}, {}, {}]
+
+  let output = [];
+
+  let result;
+
+  for (let i = 0; i < AST.length; i++) {
+    const currentNode = AST[i];
+    const currentNodeType = currentNode.nodeType;
+    const currentNodeMetadata = currentNode.metadata;
+
+    switch (currentNodeType) {
+      case "VariableDeclaration":
+        console.log(chalk.yellow("VariableDeclaration Node"), currentNode);
+
+        //write to memory, assigning it actual value
+
+        Memory.write(currentNodeMetadata);
+
+        break;
+      case "PrintStatement":
+        console.log(chalk.yellow("PrintStatement Node"), currentNode);
+
+        //two types of print statements
+
+        //1. print a variable
+        //2. print a literal
+
+        switch (currentNodeMetadata.printType) {
+          case "variable":
+            //print(arr)
+
+            //we need to print -> what -> arr -> variable -> varible value? -> memory.read
+
+            result = Memory.read(currentNodeMetadata.toPrint[0]);
+
+            output.push(result.value);
+
+            break;
+          case "literal":
+            let literalValue = currentNodeMetadata.toPrint.join(" ");
+            console.log("literalValue:", literalValue);
+
+            result = stringSanitizeforFinalOutput(literalValue);
+
+            output.push(result);
+            break;
+          default:
+            break;
+        }
+
+        break;
+      default:
+        break;
+    }
+  }
+
+  return output;
 }
 
 function runFile(filePath) {
@@ -41,7 +115,11 @@ function runFile(filePath) {
       return;
     }
 
-    let result = InterpretJs(sourcecode);
+    let output = InterpretJs(sourcecode);
+
+    output.forEach((element) => {
+      console.log(element);
+    });
   });
 }
 

@@ -1,5 +1,7 @@
 
 
+print(name) 
+
 let num = 12             
      let name = 'pablo pandey'
   const arr = [1,2,3,4]
@@ -10,7 +12,9 @@ let num = 12
 print(666)
 
 
-print(arr)
+prin(arr)
+
+print(name)
 
 print('Hello from ParallelJs')
 
