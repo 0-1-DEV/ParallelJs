@@ -4,8 +4,11 @@ import chalk from "chalk";
 import { codeCleaner } from "../tokeniser/cleaners.js";
 import { tokeniser } from "../tokeniser/main.js";
 import { Parser } from "../parser/main.js";
+import { logMemory } from "../core/helpers.js";
 
 function InterpretJs(sourcecode) {
+  console.log(chalk.red("Creation Phase Starts"));
+
   console.log(chalk.red("sourcecode:"), sourcecode);
 
   //STEP 1: Clean the code
@@ -22,7 +25,12 @@ function InterpretJs(sourcecode) {
   //STEP 3 : Parse the code (give meaning to code, create AST out of code)
 
   let AST = Parser(tokens);
+
   console.log(chalk.green("Step 3: AST:"), AST);
+
+  console.log(chalk.green("Creation Phase Complete"));
+
+  logMemory();
 }
 
 function runFile(filePath) {

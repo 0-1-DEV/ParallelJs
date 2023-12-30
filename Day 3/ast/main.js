@@ -1,5 +1,7 @@
 import { parseVariableDeclaration, parsePrintStatement } from "./handlers.js";
 
+import { Memory } from "../core/memory.js";
+
 function createAST(tokens) {
   let ast = []; //array of objects
 
@@ -28,6 +30,14 @@ function createAST(tokens) {
         let variableNode = parseVariableDeclaration(tokens, i);
 
         ast.push(variableNode);
+
+        //1st phase of memory starts here:
+        //we take attendence of varaibles
+        //also known as hoisting (var, let and const)
+
+        //write value to stack not heap cause this is only creation phase
+
+        Memory.write(variableNode.metadata);
 
         // i = endIndex;
         break;
