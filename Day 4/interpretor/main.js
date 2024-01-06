@@ -8,6 +8,7 @@ import { logMemory } from "../core/helpers.js";
 import { Memory } from "../core/memory.js";
 import { stringSanitizeforFinalOutput } from "./helpers.js";
 
+//main()
 function InterpretJs(sourcecode) {
   console.log(chalk.red("Creation Phase Starts"));
 
@@ -32,7 +33,7 @@ function InterpretJs(sourcecode) {
 
   console.log(chalk.green("Creation Phase Complete"));
 
-  logMemory();
+  // logMemory();
 
   console.log(chalk.red("Execution Phase Starts"));
 
@@ -41,7 +42,7 @@ function InterpretJs(sourcecode) {
   let result = InterpretAST(AST);
   console.log(chalk.red("Execution Phase Ends"));
 
-  logMemory();
+  // logMemory();
 
   return result;
 }

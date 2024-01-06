@@ -1,4 +1,8 @@
-import { parseVariableDeclaration, parsePrintStatement } from "./handlers.js";
+import {
+  parseVariableDeclaration,
+  parsePrintStatement,
+  parseFunctionDeclaration,
+} from "./handlers.js";
 
 import { Memory } from "../core/memory.js";
 
@@ -45,6 +49,29 @@ function createAST(tokens) {
       case "print":
         let printNode = parsePrintStatement(tokens, i);
         ast.push(printNode);
+
+        break;
+      //what should our next case be?
+
+      case "function":
+        //we entered at i = 20
+        console.log("function parsing starts for :");
+
+        let { node: functionNode, newIndex } = parseFunctionDeclaration(
+          tokens,
+          i
+        );
+        console.log("functionNode:", functionNode);
+
+        ast.push(functionNode);
+
+        //the new value for index is 40
+        i = newIndex;
+
+        break;
+      // case "if":
+
+      // let ifNode = parseIfStatement(tokens, i);
 
       default:
         break;

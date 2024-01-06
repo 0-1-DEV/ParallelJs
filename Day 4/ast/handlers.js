@@ -48,4 +48,35 @@ function parsePrintStatement(tokens, index) {
   return printNode;
 }
 
-export { parseVariableDeclaration, parsePrintStatement };
+function parseFunctionDeclaration(tokens, index) {
+  let functionName = tokens[index + 1];
+
+  //find the function body
+
+  let bodystartIndex = index + 5;
+
+  let bodyendIndex = bodystartIndex; //25
+
+  while (tokens[bodyendIndex] !== "}") {
+    bodyendIndex++;
+  }
+
+  let bodyTokens = tokens.slice(bodystartIndex, bodyendIndex);
+
+  let node = {
+    nodeType: "FunctionDeclaration",
+
+    metadata: {
+      functionName: functionName,
+      body: bodyTokens,
+    },
+  };
+
+  return { node, newIndex: bodyendIndex + 1 };
+}
+
+export {
+  parseVariableDeclaration,
+  parsePrintStatement,
+  parseFunctionDeclaration,
+};

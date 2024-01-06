@@ -7,6 +7,8 @@ let name = 'pablo pandey'
 const arr = [1,2,3,4]
 
 
+function sayHello()
+{
 
 
 print(666)
@@ -16,6 +18,15 @@ print(arr)
 
 print(name)
 
+
 print('Hello from ParallelJs')
 
+
+
+}
+
+
+
+
+sayHello()
 
