@@ -1,0 +1,19 @@
+
+sayHello()
+
+banana(arr)
+
+var arr = [1, 2, 3, 4]
+
+let name = "Pablo"
+
+var uppername = name.toUpperCase()
+
+banana(arr)
+banana(uppername)
+
+function sayHello() {
+  banana("Hello from Js")
+}
+
+

@@ -8,18 +8,23 @@ var name = 'pablo pandey'
 const arr = [1,2,3,4]
 
 
-function sayHello()
+
+
+function sayHello(msg)
 {
 
 
-print(666)
 
-
-print('Hello from ParallelJs, testing hoisting ')
+print(msg)
 
 
 
 }
+
+
+sayHello('hello world', 'hello world 2')
+
+
 
 
 

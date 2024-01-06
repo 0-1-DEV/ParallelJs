@@ -16,6 +16,6 @@ print(arr)
 
 print(name)
 
-print('Hello from ParallelJs')
+
 
 
