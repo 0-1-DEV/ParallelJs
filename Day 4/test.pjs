@@ -27,6 +27,4 @@ print('Hello from ParallelJs')
 
 
 
-
 sayHello()
-

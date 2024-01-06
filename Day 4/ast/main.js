@@ -2,6 +2,7 @@ import {
   parseVariableDeclaration,
   parsePrintStatement,
   parseFunctionDeclaration,
+  parseFunctionCall,
 } from "./handlers.js";
 
 import { Memory } from "../core/memory.js";
@@ -61,12 +62,45 @@ function createAST(tokens) {
           tokens,
           i
         );
-        console.log("functionNode:", functionNode);
+
+        //       //'print', '(',
+        // '666',   ')',
+        // 'print', '(',
+        // 'arr',   ')',
+        // 'print', '(',
+        // 'name',  ')',
+        // 'print', '(',
+        // "'",     'Hello',
+        // 'from',  'ParallelJs',
+        // "'",     ')'
+
+        //needs to be converted into AST
+
+        //ARRAY OF TOKENS -> ARRAY OF NODES
+
+        let functionBodyTokens = functionNode.metadata.value;
+        // console.log("functionBody:", functionBodyTokens);
+
+        let functionBodyAST = createAST(functionBodyTokens);
+        // console.log("functionBodyAST:", functionBodyAST);
+
+        functionNode.metadata.value = functionBodyAST;
+
+        //tokens, nodes?
+
+        //let a = 12
+        //a -> 12
+
+        //sayHello -> functionBodyAST
+
+        Memory.write(functionNode);
 
         ast.push(functionNode);
 
         //the new value for index is 40
-        i = newIndex;
+        i = newIndex - 1;
+
+        //sayhello
 
         break;
       // case "if":
@@ -74,6 +108,16 @@ function createAST(tokens) {
       // let ifNode = parseIfStatement(tokens, i);
 
       default:
+        //sayHello, (, )
+
+        if (tokens[i + 1] === "(" && tokens[i + 2] === ")") {
+          //()
+
+          let functionCallNode = parseFunctionCall(tokens, i);
+
+          ast.push(functionCallNode);
+        }
+
         break;
     }
   }

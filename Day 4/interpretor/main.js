@@ -29,11 +29,11 @@ function InterpretJs(sourcecode) {
 
   let AST = Parser(tokens);
 
-  console.log(chalk.green("Step 3: AST:"), AST);
+  // console.log(chalk.green("Step 3: AST:"), AST);
 
   console.log(chalk.green("Creation Phase Complete"));
 
-  // logMemory();
+  logMemory();
 
   console.log(chalk.red("Execution Phase Starts"));
 

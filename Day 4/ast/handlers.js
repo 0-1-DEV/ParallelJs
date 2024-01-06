@@ -67,16 +67,29 @@ function parseFunctionDeclaration(tokens, index) {
     nodeType: "FunctionDeclaration",
 
     metadata: {
-      functionName: functionName,
-      body: bodyTokens,
+      name: functionName,
+      value: bodyTokens,
     },
   };
 
   return { node, newIndex: bodyendIndex + 1 };
 }
 
+function parseFunctionCall(tokens, index) {
+  let node = {
+    nodeType: "FunctionCall",
+
+    metadata: {
+      functionName: tokens[index],
+    },
+  };
+
+  return node;
+}
+
 export {
   parseVariableDeclaration,
   parsePrintStatement,
   parseFunctionDeclaration,
+  parseFunctionCall,
 };

@@ -57,7 +57,6 @@ class MemoryImp {
 
     //check if node is already present in memory
 
-    console.log("checking if node is already present in memory");
     let memoryNode = this.stack.find(
       (memorynode) => memorynode.name === node.name
     );
@@ -72,8 +71,6 @@ class MemoryImp {
       //new entry , let a = 12
       //_createNewEntry(node)
 
-      console.log("creating new entry");
-
       this._createNewEntry(node);
     }
 
@@ -85,11 +82,27 @@ class MemoryImp {
   //2. updateEntry
 
   _createNewEntry(node) {
+    console.log("create new entry wala node:", node);
     //get the node and store into stack memory
 
+    //two new entries that we might get
+    //pure vaiable -> var a = 12 -? placeholder -> undefined
+    //function variable -> function a() {} -> value -> functionBody
     let memoryNode = { ...node }; //node -> 0x1234 -> { name: 'num', value: '12', dataType: 'number', kind: 'let' }
 
-    memoryNode.value = undefined;
+    if (memoryNode.nodeType === "FunctionDeclaration") {
+      memoryNode.value = node.metadata.value;
+      memoryNode.name = node.metadata.name;
+      node.value = node.metadata.value;
+
+      console.log("sayhello memoryNode:", memoryNode);
+      //contains bodyAST
+      //node =
+
+      this._updateEntry(node, memoryNode);
+    } else {
+      memoryNode.value = undefined;
+    }
 
     this.stack.push(memoryNode);
 
@@ -101,6 +114,10 @@ class MemoryImp {
   }
 
   _updateEntry(node, memoryNode) {
+    //FOR FUNCTIONS
+
+    //node -> node with tokens
+    //memoryNode -> node with value
     //store value in heap and address in stack
 
     let address = generateMemoryAddress();
