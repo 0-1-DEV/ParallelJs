@@ -80,7 +80,7 @@ function parseFunctionCall(tokens, index) {
     nodeType: "FunctionCall",
 
     metadata: {
-      functionName: tokens[index],
+      name: tokens[index],
     },
   };
 

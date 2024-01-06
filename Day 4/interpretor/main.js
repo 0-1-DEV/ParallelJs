@@ -9,6 +9,7 @@ import { Memory } from "../core/memory.js";
 import { stringSanitizeforFinalOutput } from "./helpers.js";
 
 //main()
+let output = [];
 function InterpretJs(sourcecode) {
   console.log(chalk.red("Creation Phase Starts"));
 
@@ -29,7 +30,7 @@ function InterpretJs(sourcecode) {
 
   let AST = Parser(tokens);
 
-  // console.log(chalk.green("Step 3: AST:"), AST);
+  console.log(chalk.green("Step 3: AST:"), AST);
 
   console.log(chalk.green("Creation Phase Complete"));
 
@@ -39,18 +40,14 @@ function InterpretJs(sourcecode) {
 
   //STEP 4: Execute the code (interpret the code)
 
-  let result = InterpretAST(AST);
+  InterpretAST(AST);
   console.log(chalk.red("Execution Phase Ends"));
 
   // logMemory();
-
-  return result;
 }
 
 function InterpretAST(AST) {
   //AST -> [{}, {}, {}]
-
-  let output = [];
 
   let result;
 
@@ -100,12 +97,23 @@ function InterpretAST(AST) {
         }
 
         break;
+
+      case "FunctionCall":
+        let functionName = currentNodeMetadata.name;
+
+        let functionNode = Memory.read(functionName);
+        console.log("functionNode from Memory:", functionNode);
+
+        let functionBodyAST = functionNode.metadata.value;
+
+        InterpretAST(functionBodyAST);
+
+      // output.push(res);
+
       default:
         break;
     }
   }
-
-  return output;
 }
 
 function runFile(filePath) {
@@ -116,7 +124,7 @@ function runFile(filePath) {
       return;
     }
 
-    let output = InterpretJs(sourcecode);
+    InterpretJs(sourcecode);
 
     output.forEach((element) => {
       console.log(element);

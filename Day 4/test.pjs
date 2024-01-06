@@ -1,9 +1,10 @@
+sayHello()
 
 
 print(name) 
 
 let num = 12             
-let name = 'pablo pandey'
+var name = 'pablo pandey'
 const arr = [1,2,3,4]
 
 
@@ -14,12 +15,7 @@ function sayHello()
 print(666)
 
 
-print(arr)
-
-print(name)
-
-
-print('Hello from ParallelJs')
+print('Hello from ParallelJs, testing hoisting ')
 
 
 
@@ -27,4 +23,3 @@ print('Hello from ParallelJs')
 
 
 
-sayHello()
